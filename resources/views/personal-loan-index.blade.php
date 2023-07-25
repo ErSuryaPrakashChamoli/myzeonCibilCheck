@@ -338,13 +338,14 @@
 
 
             <div class="form-row" id="divBussinessother">
+
                 <div class="input-data">
-                    <input type="text" required id="currentbusiness">
+                    <input type="text" required id="currentbusiness_change" oninput="filterNonNumericCharacters(event)">
                     <div class="underline"></div>
                     <label for="currentbusiness">Years In Current Bussiness</label>
                 </div>
 
-                <div class="input-data">
+                <div class="input-data" style="margin-top: 40px;">
                     <select id="registantype">
                         <option value="">Select Residence Type</option>
                         <option value="Owned by Self / Spouse">Owned by Self / Spouse</option>
@@ -412,6 +413,20 @@
 
 
     <script>
+        // document.getElementById("currentbusiness").addEventListener('change', function() {
+        //     console.log("ente 1 input");
+
+        //     const value = input.value;
+
+        //     // Create a regular expression that matches only numbers.
+        //     const regex = /^[0-9]+$/;
+
+        //     // If the value does not match the regular expression, clear the input field.
+        //     if (!regex.test(value)) {
+        //         input.value = "";
+        //     }
+        // });
+
         var dateInput = document.getElementById("date");
 
         document.getElementById('selTurnOver').addEventListener("change", function() {
@@ -663,6 +678,44 @@
 
             // Update the input field with the filtered numeric value
             inputElement.value = numericValue;
+        }
+
+        function currentbusiness(event) {
+
+            console.log("desire amonut")
+            // Get the input element
+            let inputElement = event.target;
+
+            // Get the current input value
+            let inputValue = inputElement.value;
+
+
+
+            const value = inputValue;
+            // const value = input.value;
+
+            // Create a regular expression that matches only numbers.
+            const regex = /^[0-9]+$/;
+
+            // If the value does not match the regular expression, clear the input field.
+            if (!regex.test(value)) {
+                // input.value = "";
+                inputValue = "";
+            }
+
+
+
+
+            // // Remove non-numeric characters using regular expression
+            // let numericValue = inputValue.replace(/\D/g, '');
+
+            // // Update the input field with the filtered numeric value
+            // inputElement.value = numericValue;
+
+
+            // console.log("ente 1 input");
+
+
         }
     </script>
 
