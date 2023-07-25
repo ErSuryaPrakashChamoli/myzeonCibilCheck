@@ -188,6 +188,7 @@
             z-index: 2;
         }
 
+
         @media (max-width: 700px) {
             .container .text {
                 font-size: 30px;
@@ -212,7 +213,7 @@
     </style>
 </head>
 
-<body>
+<body onload="onloadbody()">
 
     <!-- **********************form start***************************************** -->
 
@@ -224,41 +225,42 @@
         <form action="#">
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required id="firstname">
                     <div class="underline"></div>
-                    <label for="">First Name</label>
+                    <label for="firstname">First Name</label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required id="lastname">
                     <div class="underline"></div>
-                    <label for="">Last Name</label>
+                    <label for="lastname">Last Name</label>
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required id="email">
                     <div class="underline"></div>
-                    <label for="">Email Address</label>
+                    <label for="email">Email Address</label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required>
+
+                    <input type="text" id="inpPhoneNumber" oninput="filterNonNumericCharacters(event)" required>
                     <div class="underline"></div>
-                    <label for="">Phone Number</label>
+                    <label for="inpPhoneNumber">Phone Number <span id="errorphoneNumber"></span></label>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required oninput="formatAmount(this)" id="desiredloan">
 
                     <div class="underline"></div>
-                    <label for="">Desired Loan Amount</label>
+                    <label for="desiredloan">Desired Loan Amount</label>
                 </div>
                 <div class="input-data">
                     <input type="text" required id="inpPincode">
                     <span id="error_message" style="color:red;display:none">*Not A Valid Pin</span>
                     <div class="underline"></div>
-                    <label for="" id="lablePincode">Enter Valid Pincode</label>
+                    <label for="inpPincode">Enter Valid Pincode</label>
                 </div>
             </div>
 
@@ -267,14 +269,27 @@
                 <div class="input-data">
                     <input type="text" required id="inpCity">
                     <div class="underline"></div>
-                    <label for="">City</label>
+                    <label for="inpCity">City</label>
                 </div>
                 <div class="input-data">
                     <select id="inpState">
 
                     </select>
                     <div class="underline"></div>
-                    <label for="">State</label>
+                    <label for="inpState">State</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" required id="pancard">
+                    <div class="underline"></div>
+                    <label for="pancard">Pan Card Number</label>
+                </div>
+                <div class="input-data">
+                    <input type="date" required id="inpDate">
+                    <div class="underline"></div>
+                    <label for="inpDate">Date Of Birth</label>
                 </div>
             </div>
 
@@ -287,11 +302,11 @@
                         <option value="2">Self Employed Professional</option>
                     </select>
                     <div class="underline"></div>
-                    <label for="">How are You Currently Employed ?</label>
+                    <label for="selChangeImpType">How are You Currently Employed ?</label>
                 </div>
                 <div class="input-data">
                     <select id="selTurnOver">
-                     <option value="">Please Select Turnover</option>
+                        <option value="">Please Select Turnover</option>
                         <option value="500000">Upto 5 Lacs</option>
                         <option value="1000000">5 Lacs - 10 Lacs</option>
                         <option value="2500000">10 Lacs - 25 Lacs</option>
@@ -303,76 +318,86 @@
                         <option value="100000000">5 Cr+</option>
                     </select>
                     <div class="underline"></div>
-                    <label for="">Your Grosss Anuaal Sales/Turover</label>
+                    <label for="selTurnOver">Your Grosss Anuaal Sales/Turover</label>
                 </div>
             </div>
 
             <div class="form-row" id="divProfession">
                 <div class="input-data" id="divlableProfessional">
-                    <input type="text" required>
+                    <input type="text" required id="profession">
                     <div class="underline"></div>
-                    <label for="">Profession</label>
+                    <label for="profession">Profession</label>
                 </div>
 
                 <div class="input-data" id="divlableBussinessName">
-                    <input type="text" required>
+                    <input type="text" required id="business">
                     <div class="underline"></div>
-                    <label for="">Business Name</label>
+                    <label for="business">Business Name</label>
                 </div>
             </div>
+
 
             <div class="form-row" id="divBussinessother">
-                <div class="input-data" id="divlableProfessional_inner">
-                    <input type="text" required>
+                <div class="input-data">
+                    <input type="text" required id="currentbusiness">
                     <div class="underline"></div>
-                    <label for="">Years In Current Bussiness</label>
+                    <label for="currentbusiness">Years In Current Bussiness</label>
                 </div>
 
-                <div class="input-data" id="divlableBussinessName_inner">
-                    <select id="selBussRegType">
-                    <option value="">Select Residence Type</option>
-                    <option value="Owned by Self / Spouse">Apartment</option>
-                    <option value="Owned by Parents / Siblings">House</option>
-                    <option value="Rented with Family ">Condo</option>
-                    <option value="Rented with Friends ">Other</option>
-                    <option value="Other ">Other</option>
+                <div class="input-data">
+                    <select id="registantype">
+                        <option value="">Select Residence Type</option>
+                        <option value="Owned by Self / Spouse">Owned by Self / Spouse</option>
+                        <option value="Owned by Parents / Siblings">Owned by Parents / Siblings</option>
+                        <option value="Rented with Family">Rented with Family</option>
+                        <option value="Rented with Friends">Rented with Friends</option>
+                        <option value="Other ">Other</option>
                     </select>
                     <div class="underline"></div>
-                    <label for="">Registance Type</label>
+                    <label for="registantype">Registance Type</label>
                 </div>
             </div>
 
-            <div class="form-row" id="divProfessinalother">
-                <div class="input-data" id="divlableProfessional">
-                    <input type="text" required>
+            <div class="form-row" id="divprofessionalOtherinfo">
+                <div class="input-data">
+                    <input type="text" required id="Yearsinprofessionalbusiness">
                     <div class="underline"></div>
-                    <label for="">Years In Current Professional</label>
+                    <label for="Yearsinprofessionalbusiness">Years In Professional Bussiness</label>
                 </div>
 
-                <div class="input-data" id="divlableBussinessName">
-                    <input type="text" required>
+                <div class="input-data">
+                    <select id="registancetype">
+                        <option value="">Select Residence Type</option>
+                        <option value="Owned by Self / Spouse">Owned by Self / Spouse</option>
+                        <option value="Owned by Parents / Siblings">Owned by Parents / Siblings</option>
+                        <option value="Rented with Family">Rented with Family</option>
+                        <option value="Rented with Friends">Rented with Friends</option>
+                        <option value="Other">Other</option>
+                    </select>
                     <div class="underline"></div>
-                    <label for="">Business Name</label>
+                    <label for="registancetype">Registance Type</label>
                 </div>
             </div>
-
-
-
-
 
             <div class="form-row">
                 <div class="input-data textarea">
-                    <textarea rows="8" cols="80" required></textarea>
-                    <br />
+                    <textarea rows="8" cols="80" required id="message"></textarea>
+
                     <div class="underline"></div>
-                    <label for="">Write your message</label>
-                    <br />
-                    <div class="form-row submit-btn">
-                        <div class="input-data">
-                            <div class="inner"></div>
-                            <input type="button" value="submit" id="btnSubmit">
-                        </div>
-                    </div>
+                    <label for="message">Write your message</label>
+
+
+
+                </div>
+            </div>
+
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="button" value="submit" id="btnSubmit">
+                </div>
+            </div>
+
         </form>
     </div>
 
@@ -381,25 +406,17 @@
     <!-- ****************************form end********************************************* -->
 
 
+    <!-- 
+    {{-- *************************************Script Start here******************************** --}} -->
 
-    {{-- *************************************Script Start here******************************** --}}
+
 
     <script>
-        //    object.addEventListener("change", myScript);
+        var dateInput = document.getElementById("date");
 
-
-
-        var element = document.getElementById("divlableProfessional");
-        element.style.display = "none";
-
-        var element = document.getElementById("divlableBussinessName");
-        element.style.display = "none";
-
-
-    
         document.getElementById('selTurnOver').addEventListener("change", function() {
             console.log("change turnover");
-           
+
 
         });
 
@@ -413,12 +430,7 @@
 
                 case "0":
                     // code block
-
-                    var element = document.getElementById("divlableProfessional");
-                    element.style.display = "block";
-
-                    var element = document.getElementById("divlableBussinessName");
-                    element.style.display = "none";
+                    HideBussiness();
 
 
                     // console.log("enter 1");
@@ -426,26 +438,15 @@
 
                 case "1":
                     // code block
-
-                    var element = document.getElementById("divlableProfessional");
-                    element.style.display = "none";
-
-                    var element = document.getElementById("divlableBussinessName");
-                    element.style.display = "block";
-
-
+                    ShowBussiness();
+                    HideProfessional();
                     // console.log("enter 2");
                     break;
                 case "2":
-                    // code block
-
-                    var element = document.getElementById("divlableProfessional");
-                    element.style.display = "block";
-
-                    var element = document.getElementById("divlableBussinessName");
-                    element.style.display = "none";
-
-                    console.log("enter 4");
+                    // code block 
+                    //selChangeImpType divprofessionalOtherinfo divBussinessother
+                    ShowProfessional();
+                    HideBussiness();
                     break;
                 default:
                     // code block
@@ -496,42 +497,57 @@
 
         function validateFormData() {
 
+            var phonenumber = document.getElementById('inpPhoneNumber');
+            var getPhoneNumber = phonenumber.value;
+
+            var phoneError = document.getElementById("errorphoneNumber");
+
+
+            console.log("phonenuber" + getPhoneNumber);
+
+            if (getPhoneNumber === '' || getPhoneNumber === undefined) {
+                phoneError.textContent = "*Please Enter Phone Number";
+                phoneError.style.color = "red";
+                phoneError.style.fontSize = "10px";
+                phonenumber.style.borderColor = "red";
+
+                return false; // Phone number is blank or undefined
+            } else {
+
+                getValidPhone = isValidIndianPhoneNumber(getPhoneNumber);
+
+                if (getValidPhone) {
+                    console.log("valid number");
+                    phoneError.style.visibility = "hidden";
+
+                    return true;
+                } else {
+                    console.log("not valid number");
+                    phoneError.style.visibility = "visible";
+                    phoneError.textContent = "*Please Enter Valid Number";
+                    phoneError.style.color = "red";
+                    phoneError.style.fontSize = "10px";
+                    phonenumber.style.borderColor = "red";
+                    return false;
+                }
+
+                // You can perform additional validation or processing here if needed
+                // return true; // Phone number is not blank and defined
+            }
+
+
             console.log('enter validateion');
 
         }
 
 
-        // *******************************************************
-
-        // Function to toggle visibility of fields based on employment type
-        function toggleEmploymentFields() {
-            const employmentType = $('#employment_type_id').val();
-            if (employmentType === "3") {
-                // Show fields for Self Employed Business
-                $('#selfEmployedBusinessFields').show();
-                $('#selfEmployedProfessionalFields').hide();
-            } else if (employmentType === "2") {
-                // Show fields for Self Employed Professional
-                $('#selfEmployedProfessionalFields').show();
-                $('#selfEmployedBusinessFields').hide();
-            } else {
-                // Hide both fields when no employment type is selected
-                $('#selfEmployedBusinessFields').hide();
-                $('#selfEmployedProfessionalFields').hide();
-            }
-        }
-        // **************************************************
-
 
         function getCityStateFromPincode(pincode) {
+
+
             var city = document.getElementById("inpCity");
             var state = document.getElementById("inpState");
             var lablePincode = document.getElementById("lablePincode");
-
-
-
-
-
             var getState = state.value;
             var getCity = city.value;
 
@@ -560,11 +576,99 @@
                     console.log("An error occurred:", error);
                 });
         }
+
+
+        function ShowProfessional() {
+
+            var nameOfProfessionType = document.getElementById("divlableProfessional");
+            var nameOfProfessionotherinfo = document.getElementById("divprofessionalOtherinfo");
+            nameOfProfessionType.style.display = "block";
+            nameOfProfessionotherinfo.style.display = "block"
+
+
+
+        }
+
+        function HideProfessional() {
+
+            var nameOfProfessionType = document.getElementById("divlableProfessional");
+            var nameOfProfessionotherinfo = document.getElementById("divprofessionalOtherinfo");
+            nameOfProfessionType.style.display = "none";
+            nameOfProfessionotherinfo.style.display = "none"
+
+        }
+
+        function HideBussiness() {
+            var nameOfBussinessType = document.getElementById("divlableBussinessName");
+            var nameOfBussinessotherinfo = document.getElementById("divBussinessother");
+            nameOfBussinessType.style.display = "none";
+            nameOfBussinessotherinfo.style.display = "none";
+
+
+
+        }
+
+        function ShowBussiness() {
+
+            var nameOfBussinessType = document.getElementById("divlableBussinessName");
+            var nameOfBussinessotherinfo = document.getElementById("divBussinessother");
+            nameOfBussinessType.style.display = "block";
+            nameOfBussinessotherinfo.style.display = "block";
+
+        }
+
+        function HideAllOther() {
+            HideProfessional();
+            HideBussiness();
+
+
+        }
+
+        function formatAmount(input) {
+            const amountInput = input;
+            let amountValue = amountInput.value.replace(/,/g, '');
+
+            // Remove any non-digit characters
+            amountValue = amountValue.replace(/\D/g, '');
+
+            // Convert to a number and format with commas for thousands and lakhs
+            amountValue = Number(amountValue).toLocaleString('en-IN');
+
+            // Update the input value with the formatted loan amount
+            amountInput.value = amountValue;
+        }
+
+
+        function onloadbody() {
+            HideAllOther();
+        }
+
+        function isValidIndianPhoneNumber(phoneNumber) {
+            // Regular expression to match Indian phone numbers
+            const phoneRegex = /^(\+91|0)?[6789]\d{9}$/;
+
+            return phoneRegex.test(phoneNumber);
+        }
+
+
+        function filterNonNumericCharacters(event) {
+            // Get the input element
+            let inputElement = event.target;
+
+            // Get the current input value
+            let inputValue = inputElement.value;
+
+            // Remove non-numeric characters using regular expression
+            let numericValue = inputValue.replace(/\D/g, '');
+
+            // Update the input field with the filtered numeric value
+            inputElement.value = numericValue;
+        }
     </script>
 
 
 
-    {{-- *************************************Script end here******************************** --}}
+    <!-- {{-- *************************************Script end here******************************** --}} -->
 </body>
 
 </html>
