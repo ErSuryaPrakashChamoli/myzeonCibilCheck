@@ -76,6 +76,20 @@
             border-bottom: 2px solid rgba(0, 0, 0, 0.12);
         }
 
+
+        .input-data select,
+        .textarea textarea {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            font-size: 17px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .input-data select:focus~label,
+        .input-data select:valid~label,
+
         .input-data input:focus~label,
         .textarea textarea:focus~label,
         .input-data input:valid~label,
@@ -161,6 +175,19 @@
             z-index: 2;
         }
 
+        .submit-btn .input-data select {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
         @media (max-width: 700px) {
             .container .text {
                 font-size: 30px;
@@ -223,25 +250,29 @@
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" required>
+
                     <div class="underline"></div>
                     <label for="">Desired Loan Amount</label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required id="inpPincode">
+                    <span id="error_message" style="color:red;display:none">*Not A Valid Pin</span>
                     <div class="underline"></div>
-                    <label for="">Enter Pincode</label>
+                    <label for="" id="lablePincode">Enter Valid Pincode</label>
                 </div>
             </div>
 
 
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required>
+                    <input type="text" required id="inpCity">
                     <div class="underline"></div>
                     <label for="">City</label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required>
+                    <select id="inpState">
+
+                    </select>
                     <div class="underline"></div>
                     <label for="">State</label>
                 </div>
@@ -249,19 +280,85 @@
 
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required>
+
+                    <Select style="background-color:white" id="selChangeImpType">
+                        <option value="0">Select Employed Type</option>
+                        <option value="1">Self Employed Business</option>
+                        <option value="2">Self Employed Professional</option>
+                    </select>
                     <div class="underline"></div>
                     <label for="">How are You Currently Employed ?</label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required>
+                    <select id="selTurnOver">
+                     <option value="">Please Select Turnover</option>
+                        <option value="500000">Upto 5 Lacs</option>
+                        <option value="1000000">5 Lacs - 10 Lacs</option>
+                        <option value="2500000">10 Lacs - 25 Lacs</option>
+                        <option value="5000000">25 Lacs - 50 Lacs</option>
+                        <option value="7500000">50 Lacs - 75 Lacs</option>
+                        <option value="10000000">75 Lacs - 1 Cr</option>
+                        <option value="30000000">1 Cr - 3 Cr</option>
+                        <option value="50000000">3 Cr - 5 Cr</option>
+                        <option value="100000000">5 Cr+</option>
+                    </select>
                     <div class="underline"></div>
                     <label for="">Your Grosss Anuaal Sales/Turover</label>
                 </div>
             </div>
-            
-            
-            
+
+            <div class="form-row" id="divProfession">
+                <div class="input-data" id="divlableProfessional">
+                    <input type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Profession</label>
+                </div>
+
+                <div class="input-data" id="divlableBussinessName">
+                    <input type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Business Name</label>
+                </div>
+            </div>
+
+            <div class="form-row" id="divBussinessother">
+                <div class="input-data" id="divlableProfessional_inner">
+                    <input type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Years In Current Bussiness</label>
+                </div>
+
+                <div class="input-data" id="divlableBussinessName_inner">
+                    <select id="selBussRegType">
+                    <option value="">Select Residence Type</option>
+                    <option value="Owned by Self / Spouse">Apartment</option>
+                    <option value="Owned by Parents / Siblings">House</option>
+                    <option value="Rented with Family ">Condo</option>
+                    <option value="Rented with Friends ">Other</option>
+                    <option value="Other ">Other</option>
+                    </select>
+                    <div class="underline"></div>
+                    <label for="">Registance Type</label>
+                </div>
+            </div>
+
+            <div class="form-row" id="divProfessinalother">
+                <div class="input-data" id="divlableProfessional">
+                    <input type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Years In Current Professional</label>
+                </div>
+
+                <div class="input-data" id="divlableBussinessName">
+                    <input type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Business Name</label>
+                </div>
+            </div>
+
+
+
+
 
             <div class="form-row">
                 <div class="input-data textarea">
@@ -273,7 +370,7 @@
                     <div class="form-row submit-btn">
                         <div class="input-data">
                             <div class="inner"></div>
-                            <input type="submit" value="submit">
+                            <input type="button" value="submit" id="btnSubmit">
                         </div>
                     </div>
         </form>
@@ -282,6 +379,192 @@
 
 
     <!-- ****************************form end********************************************* -->
+
+
+
+    {{-- *************************************Script Start here******************************** --}}
+
+    <script>
+        //    object.addEventListener("change", myScript);
+
+
+
+        var element = document.getElementById("divlableProfessional");
+        element.style.display = "none";
+
+        var element = document.getElementById("divlableBussinessName");
+        element.style.display = "none";
+
+
+    
+        document.getElementById('selTurnOver').addEventListener("change", function() {
+            console.log("change turnover");
+           
+
+        });
+
+        document.getElementById('selChangeImpType').addEventListener("change", function() {
+            var element = document.getElementById("selChangeImpType");
+            var getOptionValue = element.value;
+
+            console.log("change option value***********" + getOptionValue);
+
+            switch (getOptionValue) {
+
+                case "0":
+                    // code block
+
+                    var element = document.getElementById("divlableProfessional");
+                    element.style.display = "block";
+
+                    var element = document.getElementById("divlableBussinessName");
+                    element.style.display = "none";
+
+
+                    // console.log("enter 1");
+                    break;
+
+                case "1":
+                    // code block
+
+                    var element = document.getElementById("divlableProfessional");
+                    element.style.display = "none";
+
+                    var element = document.getElementById("divlableBussinessName");
+                    element.style.display = "block";
+
+
+                    // console.log("enter 2");
+                    break;
+                case "2":
+                    // code block
+
+                    var element = document.getElementById("divlableProfessional");
+                    element.style.display = "block";
+
+                    var element = document.getElementById("divlableBussinessName");
+                    element.style.display = "none";
+
+                    console.log("enter 4");
+                    break;
+                default:
+                    // code block
+            }
+
+            // // getCityStateFromPincode(getPincode);
+            // toggleEmploymentFields();
+
+
+        });
+
+
+        document.getElementById('inpPincode').addEventListener("change", function() {
+            var element = document.getElementById("inpPincode");
+            var getPincode = element.value;
+
+            console.log("change pincode");
+
+            getCityStateFromPincode(getPincode);
+
+
+        });
+
+
+        document.getElementById("btnSubmit").addEventListener("click", function() {
+            // document.getElementById("myElement").style.color = "red";
+
+            console.log("button submit clic");
+
+
+            var element = document.getElementById("inpPincode");
+            var city = document.getElementById("inpCity");
+            var state = document.getElementById("inpState");
+
+            var getPincode = element.value;
+            var getState = state.value;
+            var getCity = city.value;
+
+
+            console.log(getPincode + getState + getCity);
+
+
+            validateFormData();
+
+
+        });
+
+
+        function validateFormData() {
+
+            console.log('enter validateion');
+
+        }
+
+
+        // *******************************************************
+
+        // Function to toggle visibility of fields based on employment type
+        function toggleEmploymentFields() {
+            const employmentType = $('#employment_type_id').val();
+            if (employmentType === "3") {
+                // Show fields for Self Employed Business
+                $('#selfEmployedBusinessFields').show();
+                $('#selfEmployedProfessionalFields').hide();
+            } else if (employmentType === "2") {
+                // Show fields for Self Employed Professional
+                $('#selfEmployedProfessionalFields').show();
+                $('#selfEmployedBusinessFields').hide();
+            } else {
+                // Hide both fields when no employment type is selected
+                $('#selfEmployedBusinessFields').hide();
+                $('#selfEmployedProfessionalFields').hide();
+            }
+        }
+        // **************************************************
+
+
+        function getCityStateFromPincode(pincode) {
+            var city = document.getElementById("inpCity");
+            var state = document.getElementById("inpState");
+            var lablePincode = document.getElementById("lablePincode");
+
+
+
+
+
+            var getState = state.value;
+            var getCity = city.value;
+
+            const url = `https://api.postalpincode.in/pincode/${pincode}`;
+
+            // Make an HTTP GET request to the API
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if the API response is successful
+                    if (data && data[0].Status === "Success") {
+                        const city = data[0].PostOffice[0].District;
+                        const state = data[0].PostOffice[0].State;
+                        document.getElementById("inpCity").value = city;
+                        document.getElementById("inpState").innerHTML = `<option value="">Select State</option><option value="${state}">${state}</option>`;
+                        console.log(`City: ${city}`);
+                        console.log(`State: ${state}`);
+                        lablePincode.style.display = "none";
+
+                    } else {
+                        lablePincode.style.color = "red";
+                        console.log("Invalid pincode");
+                    }
+                })
+                .catch(error => {
+                    console.log("An error occurred:", error);
+                });
+        }
+    </script>
+
+
+
+    {{-- *************************************Script end here******************************** --}}
 </body>
 
 </html>
