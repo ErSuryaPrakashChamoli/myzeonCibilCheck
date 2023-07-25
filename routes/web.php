@@ -19,3 +19,11 @@ Route::get('/', function () {
 
 
 Route::view('register','index');
+
+Route::view('persoanl-loan','personal-loan');
+
+Route::view('persoanl-loan-user','persoanl-loan-user');
+
+
+Route::view('personal-loan-info','personal-loan-index');
+

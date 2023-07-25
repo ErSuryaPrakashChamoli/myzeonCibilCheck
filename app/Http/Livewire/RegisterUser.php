@@ -23,85 +23,118 @@ class RegisterUser extends Component
     public $terms;
 
     public $middle_name;
+    public $pancard;
+    public $dateofbirth;
+    public $mobileNumber;
+
 
     public $totalSteps     = 4;
     public $currentSteps   = 1;
 
-    public function mount(){
+    public function mount()
+    {
         $this->currentSteps = 1;
     }
 
-    public function decreaseStep(){
+    public function decreaseStep()
+    {
         $this->resetErrorBag();
         $this->validateData();
         $this->currentSteps--;
-        if($this->currentSteps < 1){ 
-               $this->currentSteps = $this->totalSteps;
+        if ($this->currentSteps < 1) {
+            $this->currentSteps = $this->totalSteps;
         }
-
     }
 
-    public function increaseValue(){
+    public function increaseValue()
+    {
         $this->resetErrorBag();
         $this->validateData();
-         $this->currentSteps++;
-         if($this->currentSteps > $this->totalSteps){
+        $this->currentSteps++;
+        if ($this->currentSteps > $this->totalSteps) {
             $this->currentSteps = $this->totalSteps;
             $this->currentSteps = 1;
-
-         }
-
+        }
     }
 
-   public function validateData(){
-     if($this->currentSteps == 1){ 
-
-        $this->validate([
-            'first_name' => 'required|string',
-            'last_name'  => 'required|string',
-            'middle_name'=> 'nullable',
-            'gender'     =>  'required',
-            'age'        => 'required|digits:2'
-        ]);
-
-     }
-     elseif($this->currentSteps == 2){
-        $this->validate([
-            'email'      => 'required|email|unique:students',
-            'phone'      => 'required',
-            'registance' => 'required',
-            'city'       => 'required'
-
-        ]);
-
-     }
-     elseif($this->currentSteps == 3){
-        $this->validate([
-            // 'frameworks' => 'required|array|min:2|max:4'
-            'frameworks' => 'required'
-        ]);
-
-     }
-
-
-   }
-
-    public function register(){
-        // dd("call");
-        // $this->resetErrorBag();
-        // if($this->currentSteps == 4){
-        //     $this->validate([
-        //         $this->validate([
-        //             'cv' => 'required|mimes:doc,docx,pdf|max:1024',
-        //             'terms' => 'accepted'
-
-        //         ])
-        //     ]);
-        // }
-
-        // dd("now ,you can submit form");
-
+    public function cibiRegister()
+    {
+        $this->resetErrorBag();
+        $this->validateData();
+        $this->currentSteps++;
+        if ($this->currentSteps > $this->totalSteps) {
+            $this->currentSteps = $this->totalSteps;
+            $this->currentSteps = 1;
+        }
     }
+
+    public function validateData()
+    {
+        if ($this->currentSteps == 1) {
+
+            $this->validate([
+                'first_name' => 'required|string',
+                'last_name'  => 'required|string',
+                'middle_name' => 'nullable',
+                'pancard'    => 'required',
+                'dateofbirth' => 'required',
+                'email'        => 'required',
+                'mobileNumber' => 'required'
+            ]);
+        } elseif ($this->currentSteps == 2) {
+            $this->validate([
+                'email'      => 'required|email|unique:students',
+                'phone'      => 'required',
+                'registance' => 'required',
+                'city'       => 'required'
+
+            ]);
+        } elseif ($this->currentSteps == 3) {
+            $this->validate([
+                // 'frameworks' => 'required|array|min:2|max:4'
+                'frameworks' => 'required'
+            ]);
+        }
+    }
+
+    public function register()
+    {
+
+        $url = 'https://example.com/post-data.php';
+         
+        if($currentSteps==1){
+            $data = [
+                'name' => 'John Doe',
+                'email' => 'johndoe@example.com',
+            ];
+        }
+
+        $data = [
+            'name' => 'John Doe',
+            'email' => 'johndoe@example.com',
+        ];
+
+        // Initialize cURL.
+        $ch = curl_init($url);
+
+        // Set the POST options.
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+        // Execute the request.
+        $response = curl_exec($ch);
+
+        // Close the cURL handle.
+        curl_close($ch);
+        // Check the response.
+        if ($response === false) {
+            echo 'cURL error: ' . curl_error($ch);
+        } else {
+            echo $response;
+        }
+    }
+
+
 
     public function render()
     {
