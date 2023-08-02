@@ -1,3 +1,13 @@
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    echo "hi clic";
+    print_r("thissssssssssssssssssclic click clic");
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -222,24 +232,24 @@
         <div class="text">
             Contact us Form
         </div>
-        <form action="#">
+        <form id="form_loan" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required id="firstname">
+                    <input type="text" required id="inpfirstname">
                     <div class="underline"></div>
-                    <label for="firstname">First Name</label>
+                    <label for="firstname">First Name<span id="errorFirstName"></span></label>
                 </div>
                 <div class="input-data">
-                    <input type="text" required id="lastname">
+                    <input type="text" id="inplastname" required>
                     <div class="underline"></div>
-                    <label for="lastname">Last Name</label>
+                    <label for="lableinpLastname">Last Name<span id="error_last_name">This is inform</span></label>
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required id="email">
+                    <input type="text" required id="Inpemail">
                     <div class="underline"></div>
-                    <label for="email">Email Address</label>
+                    <label for="email">Email Address<span id="error_email"></span></label>
                 </div>
                 <div class="input-data">
 
@@ -282,9 +292,9 @@
 
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" required id="pancard">
+                    <input type="text" required id="inpPancard">
                     <div class="underline"></div>
-                    <label for="pancard">Pan Card Number</label>
+                    <label for="pancard">Pan Card Number<span id="errorPancard"></span></label>
                 </div>
                 <div class="input-data">
                     <input type="date" required id="inpDate">
@@ -367,7 +377,7 @@
                 </div>
 
                 <div class="input-data">
-                    <select id="registancetype">
+                    <select id="registancetype" style="margin-top: 40px;">
                         <option value="">Select Residence Type</option>
                         <option value="Owned by Self / Spouse">Owned by Self / Spouse</option>
                         <option value="Owned by Parents / Siblings">Owned by Parents / Siblings</option>
@@ -427,7 +437,66 @@
         //     }
         // });
 
+
+
+        document.getElementById("Inpemail").addEventListener('change', function() {
+            // const emailRegex = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+            
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var email = document.getElementById("Inpemail");
+            var getEmail = email.value;
+
+            var emailErro = document.getElementById("error_email");
+
+            if(emailRegex.test(getEmail)!=true){
+                emailErro.style.display = "visible"
+                emailErro.textContent = "Enter Valid Email"
+                emailErro.style.color = "red";
+                
+            }else{
+
+                emailErro.style.display = "hidden";
+                emailErro.textContent = "";
+                emailErro.log("check valide");
+            }
+
+
+
+        });
+
+
+
+        document.getElementById("inpPancard").addEventListener('change', function() {
+
+            console.log("enter pancard");
+
+            //   var pancard = document.getElementById('inpPancard');
+            //   var errorspan = document.getElementById("errorPancard");
+            //   var getpancard = pancard.value;
+
+            //   $check = isValidPAN(getpancard);
+
+
+
+
+
+            //   if($check){
+            //     errorspan.visibility = "none";
+            //     return true;
+            //   }else{
+            //     errorspan.visibility = "visiable";
+            //     errorspan.contains = "*Please type valid pin"  
+            //     errorspan.style.color = "red";
+            //     return false;
+            //   }
+
+        });
+
         var dateInput = document.getElementById("date");
+
+
+
 
         document.getElementById('selTurnOver').addEventListener("change", function() {
             console.log("change turnover");
@@ -506,11 +575,93 @@
 
             validateFormData();
 
+            //var form = document.getElementById('form_loan');
+            //form.submit();
+
+
 
         });
 
 
+
+            // **********************firstName **************************        
+
+            var firstname = document.getElementById("inpfirstname");
+            var errorSpanfirst = document.getElementById("errorFirstName");
+            var getFirstName = firstname.value;
+
+            var check = containsSpecialSymbols(getFirstName);
+            console.log("checkiiiiii" + check);
+
+            if (check != true) {
+                document.getElementById("errorFirstName").style.display = "hidden";
+                document.getElementById("errorFirstName").textContent = "";
+
+
+            } else {
+                console.log("checkiiiiii viiiiiiiiiiii");
+                // errorSpanfirst.style.visibility = "visiable";
+                document.getElementById("errorFirstName").style.display = "visible";
+                errorSpanfirst.textContent = "*Please type valid name";
+                errorSpanfirst.style.color = "red";
+
+            }
+
+
+
         function validateFormData() {
+
+            // ****************************LastName********************
+
+            var lastnameid = document.getElementById("inplastname");
+            var getLastname = lastnameid.value;
+
+            var lastnameError = document.getElementById("error_last_name");
+
+            console.log("lassssssssss" + getLastname);
+
+            var checklastname = containsSpecialSymbols(getLastname);
+            if (checklastname != true) {
+                lastnameError.style.display = "hidden";
+                lastnameError.textContent = "";
+                console.log("check valide");
+
+            } else {
+                console.log("check invalid");
+                lastnameError.style.display = "visible"
+                lastnameError.textContent = "Enter Valid Name"
+                lastnameError.style.color = "red";
+
+            }
+
+
+
+            //    *****************************************valid pancard**************************** 
+
+            var pancard = document.getElementById("inpPancard");
+            var errorspan = document.getElementById("errorPancard");
+            var getpancard = pancard.value;
+
+            var check = isValidPAN(getpancard);
+
+            console.log("checkKKK" + check);
+
+
+
+            if (check == true) {
+                console.log("checkk hide");
+                errorspan.style.visibility = "hidden";
+            } else {
+                errorspan.style.visibility = "visiable";
+                errorspan.textContent = "*Please type valid pin"
+                errorspan.style.color = "red";
+
+            }
+
+
+
+
+            // **********************phonenumber validation************************
 
             var phonenumber = document.getElementById('inpPhoneNumber');
             var getPhoneNumber = phonenumber.value;
@@ -551,7 +702,8 @@
             }
 
 
-            console.log('enter validateion');
+            // console.log('enter validateion');
+
 
         }
 
@@ -566,29 +718,30 @@
             var getState = state.value;
             var getCity = city.value;
 
-            const url = `https://api.postalpincode.in/pincode/${pincode}`;
+            const url = 'https://api.postalpincode.in/pincode/'+pincode;
 
             // Make an HTTP GET request to the API
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
+                    
                     // Check if the API response is successful
-                    if (data && data[0].Status === "Success") {
+                    if (data &&  data.length > 0  && data[0].Status === "Success") { 
+    
                         const city = data[0].PostOffice[0].District;
                         const state = data[0].PostOffice[0].State;
                         document.getElementById("inpCity").value = city;
-                        document.getElementById("inpState").innerHTML = `<option value="">Select State</option><option value="${state}">${state}</option>`;
-                        console.log(`City: ${city}`);
-                        console.log(`State: ${state}`);
+                        // document.getElementById("inpState").innerHTML = "<option value=''>Select State</option><option value='${state}'>${state}</option>";
+        
                         lablePincode.style.display = "none";
 
                     } else {
                         lablePincode.style.color = "red";
-                        console.log("Invalid pincode");
+                       
                     }
                 })
                 .catch(error => {
-                    console.log("An error occurred:", error);
+                   
                 });
         }
 
@@ -716,6 +869,41 @@
             // console.log("ente 1 input");
 
 
+        }
+
+
+        function isValidPAN(panNumber) {
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+            return panRegex.test(panNumber);
+        }
+
+
+        function containsSpecialSymbols(inputString) {
+            const regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; // Regular expression for special symbols
+
+            return regex.test(inputString);
+        }
+
+        function checkFillAllfield(){
+             
+            var inpfirstname=document.getElementById('inpfirstname').value;
+            var inplastname=document.getElementById('inplastname').value;
+            var Inpemail=document.getElementById('Inpemail').value;
+            var inpPhoneNumber=document.getElementById('inpPhoneNumber').value;
+            var inpPhoneNumber=document.getElementById('inpPhoneNumber').value;
+            var desiredloan=document.getElementById('desiredloan').value;
+            var inpPincode=document.getElementById('inpPincode').value;
+            var inpCity=document.getElementById('inpCity').value;
+            var inpState=document.getElementById('inpState').value;
+            var inpPancard=document.getElementById('inpPancard').value;
+            var inpDate=document.getElementById('inpDate').value;
+            var selChangeImpType=document.getElementById('selChangeImpType').value;
+            var selTurnOver=document.getElementById('selTurnOver').value;
+            var divlableBussinessName=document.getElementById('divlableBussinessName').value;
+            var registantype=document.getElementById('registantype').value;
+            var message = document.getElementById("message").value;
+            
+            
         }
     </script>
 

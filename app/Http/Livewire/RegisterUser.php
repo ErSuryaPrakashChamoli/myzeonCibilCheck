@@ -102,12 +102,7 @@ class RegisterUser extends Component
 
         $url = 'https://example.com/post-data.php';
          
-        if($currentSteps==1){
-            $data = [
-                'name' => 'John Doe',
-                'email' => 'johndoe@example.com',
-            ];
-        }
+
 
         $data = [
             'name' => 'John Doe',
